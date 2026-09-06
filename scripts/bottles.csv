@@ -1,0 +1,72 @@
+id,user_id,type,name,producer,country,vintage,proof,quantity,spirit_type,purchase_price,purchase_date,created_at,updated_at
+66ce5221-3cbf-42e5-998b-c80af98da426,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Pinot Noir,Domaine Drouhin,USA,2022,null,1,pinot noir,54,null,2026-01-31 03:00:43.683936,2026-01-31 03:00:43.683936
+fed0c21d-d0f1-476f-8b47-d3de5f87cf35,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Private Select,Marker's Mark,USA,null,111,1,bourbon,80,null,2026-01-31 02:45:34.968553,2026-01-31 02:45:34.968553
+e0d1c123-fca3-4ebf-bf12-62c9623089cd,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Prisoner's Share,High West,USA,null,102,1,bourbon,250,null,2026-01-31 15:20:57.182471,2026-01-31 15:20:57.182471
+461efcce-097e-446d-b6cd-8accc7c1f546,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,A Midwinter Night’s Dram,High West,USA,null,99,1,bourbon,130,null,2026-01-31 15:23:49.673017,2026-01-31 15:23:49.673017
+73a1d3af-4bea-4afc-853e-dc80fd03d91d,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Triple Triple,Jameson,Ireland,null,90,1,irish,60,null,2026-02-09 20:32:03.304164,2026-02-09 20:32:03.304164
+00dbc2a4-07c1-4023-b040-48737d716ad8,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Crested,Jameson,Ireland,null,90,1,irish,60,null,2026-02-09 20:32:35.341166,2026-02-09 20:32:35.341166
+1f370007-bdab-4e28-aba2-b19452f9a985,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Jameson,Jameson,Ireland,null,90,1,irish,28,null,2026-02-09 20:34:21.486412,2026-02-09 20:34:21.486412
+fb25bbc7-431f-4e77-a504-71f74ac85477,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Midleton VR Vintage Release 2022,Midleton,Ireland,null,90,1,irish,200,null,2026-02-09 20:36:08.574761,2026-02-09 20:36:08.574761
+559a0786-2663-463e-9a71-1944bab1684f,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,sparkling wine,Prosecco,Ruffino,Italy,null,null,4,null,11,null,2026-01-31 02:55:35.635197,2026-01-31 02:55:35.635197
+5532449f-0a46-4095-9c0f-fe3cfb29d750,e03634ba-3877-4e6c-abf4-7c952d924c94,whiskey,Bour,Bon,Your mom,null,90,1,bourbon,420.69,null,2026-01-26 01:34:45.976618,2026-01-26 01:34:45.976618
+8826f207-9b18-46f0-85a3-58e56f8f53f6,67f61357-dec0-475c-98c8-0bb6c3582786,wine,Pinot,Bergstrom,USA,2017,null,1,null,55,null,2026-01-26 03:27:14.263655,2026-01-26 03:27:14.263655
+ed8595f9-26ea-433d-9490-c9e1ca853fe1,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Hirsch Bivouac,Hirsch Bivouac,USA,null,100,1,bourbon,50,null,2026-02-09 20:11:13.343434,2026-02-09 20:11:13.343434
+36b18c38-5910-4931-851c-4fd3669f9090,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Black Label,Johnnie Walker,Scotland,null,80,1,scotch,41.99,null,2026-01-31 02:37:40.227608,2026-01-31 02:37:40.227608
+c9fa44d5-7bff-42bc-a4f5-0d3ee26aba97,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Special Reserve,James Buchanan,Scotland,null,80,1,blended,75,null,2026-01-31 02:38:47.995333,2026-01-31 02:38:47.995333
+f8a34d3e-ca88-4b8e-b9a4-f47ac37be739,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Buffalo Trace,Buffalo Trace,USA,null,90,2,bourbon,28,null,2026-01-31 02:41:23.201474,2026-01-31 02:41:23.201474
+3a0868da-4e30-4561-84c9-90b6a86640cb,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Belle Meade,Bell Meade,USA,null,90.4,1,bourbon,32,null,2026-01-31 02:42:35.46118,2026-01-31 02:42:35.46118
+f722f410-81a0-4e46-9952-a243d9cb3640,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Widow Jane,Widow Jane,USA,null,92,1,bourbon,80,null,2026-01-31 02:44:27.363838,2026-01-31 02:44:27.363838
+9b376db7-bade-4c66-a37f-553ec167f027,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,The Clover,The Clover,USA,null,90,1,bourbon,36,null,2026-01-31 02:46:57.078817,2026-01-31 02:46:57.078817
+685141cd-3df4-42ef-9609-668d0adc4400,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Four Roses,Four Roses,USA,null,100,1,bourbon,25,null,2026-01-31 02:48:04.430299,2026-01-31 02:48:04.430299
+66e661e8-cb4b-4e96-9c56-1bcc2bbc601a,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Wisconsin Wheat,Wisconsin Wheat,USA,null,96,1,single malt,45,null,2026-01-31 02:49:24.632186,2026-01-31 02:49:24.632186
+dc844a70-2ba9-4e43-8dac-f951c4505c2b,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Limavady,Limavady,Ireland,null,92,1,single malt,50,null,2026-01-31 02:51:08.916465,2026-01-31 02:51:08.916465
+4de618ea-2c7f-4973-a7db-abf36899de9e,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Elijah Craig,Elijah Craig,USA,null,133,1,bourbon,75,null,2026-01-31 02:52:55.641815,2026-01-31 02:52:55.641815
+b9ca8ca5-7be5-49a1-8c61-716e6d44afab,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Pinot Noir,Domaine Drouhin,USA,2023,null,1,pinot noir,54,null,2026-01-31 03:01:20.419909,2026-01-31 03:01:20.419909
+1f2aac90-9734-40fe-ae5a-04e24bf4a501,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,SILICE,Bergstrom,USA,2023,null,2,pinot noir,84,null,2026-01-31 03:04:33.880525,2026-01-31 03:04:33.880525
+b78dd876-6ea6-4c87-92e6-5cd7aa8e3b16,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,LE PRE DU COL VINEYARD,Bergstrom,USA,2023,null,2,pinot noir,84,null,2026-01-31 03:03:43.667176,2026-01-31 03:03:43.667176
+00d5e6e0-8257-4cd4-ade5-9acbdb8f7881,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Angel's Envy,Angel's Envy,USA,null,87,1,bourbon,50,null,2026-02-09 20:37:16.760052,2026-02-09 20:37:16.760052
+a689a23c-8549-477b-9564-e6c628c03294,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Louise,Domaine Drouhin,USA,2023,null,3,pinot noir,130,null,2026-01-31 02:58:39.709273,2026-01-31 02:58:39.709273
+6e5693a9-91ad-4bf4-a70a-b21070073bf9,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Laurene,Domaine Drouhin,USA,2022,null,1,pinot noir,68,null,2026-01-31 03:06:54.436472,2026-01-31 03:06:54.436472
+42d2e992-ff30-4594-92e9-ffd2502a9415,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Jefferson's Small Batch,Jefferson's,USA,null,90,1,bourbon,50,null,2026-02-09 20:14:39.966432,2026-02-09 20:14:39.966432
+b42fe34d-0651-4d54-8926-2720e4347035,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Blanton's,Buffalo Trace,USA,null,93,3,bourbon,58,null,2026-01-31 03:12:46.181486,2026-01-31 03:12:46.181486
+7559b893-421e-412a-8aff-60a6c0c432d4,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Long Branch,Wild Turkey,USA,null,86,1,bourbon,35,null,2026-02-09 20:15:53.825779,2026-02-09 20:15:53.825779
+0d994719-740c-4118-a70c-ea74de0cbbbd,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Willett Pot Still Reserve,Willett Reserve,USA,null,94,1,bourbon,42,null,2026-02-09 20:17:33.752793,2026-02-09 20:17:33.752793
+f48bc642-b99f-4177-9ff2-bc8e3e7b6381,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Tarnished Truth,Tarnished Truth,USA,null,90,1,rye,60,null,2026-01-31 02:40:15.576154,2026-01-31 02:40:15.576154
+ee2a57f8-d0a1-47c8-97de-766f6a36dec7,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Barrell Craft Seagrass Rye,Barrell,USA,null,90,1,rye,85,null,2026-02-09 20:18:35.499438,2026-02-09 20:18:35.499438
+131ecc53-3783-45ce-ac59-0c4973ad416c,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Stagg,Stagg,USA,null,126,1,bourbon,63,null,2026-02-09 20:21:16.147726,2026-02-09 20:21:16.147726
+12a03597-ff19-4e4f-9f0b-94710be2c637,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Laurene,Domaine Drouhin,USA,2023,null,8,pinot noir,68,null,2026-01-31 02:59:48.864163,2026-01-31 02:59:48.864163
+477b1614-74f2-4ee3-8273-04174009bf0d,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Woodford Rsv Double Oaked,Woodford,USA,null,90,1,bourbon,65,null,2026-02-09 20:22:52.108654,2026-02-09 20:22:52.108654
+483e9e7f-a652-4e89-a850-22e144dffc88,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Woodford Rsv Rye,Woodford,USA,null,90,1,rye,35,null,2026-02-09 20:23:57.67135,2026-02-09 20:23:57.67135
+96e49453-1818-4e27-afcc-1c20d8c604ae,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,The Macallan Double Cask 12 Yr,Macallan,Scotland,null,86,1,scotch,85,null,2026-02-09 20:26:35.089014,2026-02-09 20:26:35.089014
+7a222e04-b7b2-4873-b52f-b94865dd5e58,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Glenfiddich 12 Year Old Single Malt,Glenfiddich,Scotlan,null,80,1,scotch,30,null,2026-02-09 20:28:25.935619,2026-02-09 20:28:25.935619
+e2f5854f-c34c-4519-bfdb-b046a058f8f8,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Jim Beam,Jim Beam,USA,null,80,1,bourbon,20,null,2026-02-09 20:29:39.592623,2026-02-09 20:29:39.592623
+2b614e4b-28ca-410b-bd41-e630d5863f07,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Old No. 7,Jack Daniels,USA,null,80,1,tennesse,45,null,2026-02-09 20:30:52.307263,2026-02-09 20:30:52.307263
+92a86fbb-7a6f-415e-a6e3-a41ee15d3479,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Basil Hayden,Basil Hayden,USA,null,80,1,bourbon,38,null,2026-02-09 20:38:48.697047,2026-02-09 20:38:48.697047
+fa80b2aa-ecaa-4f86-9336-ecd0c1fc5bc7,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Confiscated,Kentucky Owl,USA,null,90,1,bourbon,125,null,2026-02-09 20:40:09.523667,2026-02-09 20:40:09.523667
+92aa4c54-b69d-4537-b8dc-55f827a5c1e7,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Booker's,Booker's,USA,null,125,1,bourbon,100,null,2026-02-09 20:41:04.825912,2026-02-09 20:41:04.825912
+be878563-0e10-48d7-b8ec-04956fb0a798,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Willett Family Est 4YR Cask Strength Rye,Willett,USA,null,90,1,rye,70,null,2026-02-09 20:42:32.500717,2026-02-09 20:42:32.500717
+b81b567f-da75-40ca-84bb-6d04db5b1fec,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Willett Distillery Family Estate 4 Yr Small Batch,Willett,USA,null,125,1,bourbon,70,null,2026-02-09 20:43:40.319326,2026-02-09 20:43:40.319326
+3c0589dc-6b40-4ff6-b777-6ee0e14197fe,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Sagamore Small Batch Rye,Sagamore,USA,null,90,1,rye,40,null,2026-02-09 20:45:16.740329,2026-02-09 20:45:16.740329
+50620ba1-2e8a-4ba9-94c0-b6fc802afeeb,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Flag Hill Wheated Bourbon,Flag Hill,USA,null,90,1,bourbon,50,null,2026-02-09 20:46:12.478113,2026-02-09 20:46:12.478113
+718f00b1-28b6-4ed9-9cd3-a14c9ee055d5,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Hard Truth,Hard Truth,USA,null,115,1,rye,66,null,2026-02-09 20:48:42.003226,2026-02-09 20:48:42.003226
+9b789833-31fd-44a3-a86e-d80cf67748f9,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Woodford Reserve,Woodford Reserve,USA,null,90,3,bourbon,32,null,2026-02-09 20:09:34.43596,2026-02-09 20:09:34.43596
+2ae76b2b-0b2c-48dd-945b-34764122d18e,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,1792 Small Batch,1792,USA,null,94,2,bourbon,32,null,2026-02-09 20:12:40.862023,2026-02-09 20:12:40.862023
+ac2ed0ab-7e6a-4e52-860c-1b37d36c586b,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Dewar's White Label,Dewar's,Scotland,null,90,1,scotch,25,null,2026-02-09 20:50:15.985288,2026-02-09 20:50:15.985288
+aae9e50a-30dd-4f92-9b84-d0c6469b5402,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,whiskey,Laphroaig 10-Yr Single Malt,Laphroaig,Scotland,null,86,1,scotch,60,null,2026-02-09 20:51:30.980992,2026-02-09 20:51:30.980992
+7378baa0-90c5-46af-a9b5-ab0c3becbab8,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Brunello Di Montalcino,Ruffino,Italy,2018,null,1,cabernet sauvignon,70,null,2026-02-09 22:34:58.958506,2026-02-09 22:34:58.958506
+092d7416-4ef7-4507-97eb-96ef3a808fec,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Faust The Pact,Faust The Pact,USA,2019,null,1,cabernet sauvignon,125,null,2026-02-09 23:37:10.60252,2026-02-09 23:37:10.60252
+592a3129-12b1-45c4-acd9-7c35a5c0d876,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Cavaliere D'Oro,Gabbino,Italy,2023,null,1,merlot,12,null,2026-02-09 23:40:13.100389,2026-02-09 23:40:13.100389
+bdc8273e-643a-4078-bc47-18ebe18487ca,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Ricossa Antica Casa Barolo DOCG,Ricossa,Italy,2020,null,0,merlot,75,null,2026-02-09 23:43:50.039058,2026-02-09 23:43:50.039058
+34e951fb-e25d-4f2b-8431-afa1ba138b4c,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,champagne,Brut Royal,Pommery,France,null,null,0,null,40,null,2026-01-31 02:57:14.653026,2026-01-31 02:57:14.653026
+cf879409-3908-46f7-ae4c-0c3f12cb98ff,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Winery Block,Bergstrom,USA,2024,null,1,pinot noir,150,null,2026-04-26 10:50:19.856974,2026-04-26 10:50:19.856974
+20122fa5-94f5-458c-a593-ad5afe06a3b3,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,LE PRE DU COL VINEYARD,Bergstrom,USA,2024,null,2,pinot noir,84,null,2026-04-26 10:52:08.891564,2026-04-26 10:52:08.891564
+4b1b65a1-9898-4903-b95c-a7976e524ead,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,gargantua,Bergstrom,USA,2022,null,1,syrah,75,null,2026-04-26 10:53:21.755507,2026-04-26 10:53:21.755507
+2fe0ab2a-1b73-4a46-b18f-9803beb81837,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,LA SPIRALE VINEYARD,Bergstrom,USA,2024,null,2,pinot noir,84,null,2026-04-26 10:55:35.3875,2026-04-26 10:55:35.3875
+dee5e1fc-79ab-4dc2-8f23-f508ce0d508a,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Josh Reserve,Josh,USA,2023,null,2,pinot noir,19,null,2026-05-09 16:58:05.146998,2026-05-09 16:58:05.146998
+c270f460-4a7d-4a0b-a85a-d60f069160e5,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Dundee Hills,Domaine Drouhin,USA,2024,null,2,pinot noir,40.8,null,2026-05-17 11:48:32.087488,2026-05-17 11:48:32.087488
+c89cacf3-5d30-4cde-b378-e0a14206df2b,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Origine 37,Domaine Drouhin,USA,2024,null,2,pinot noir,50,null,2026-05-17 11:51:41.677737,2026-05-17 11:51:41.677737
+72cf300c-ceb2-45b7-9da9-d19a014821a6,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,sparkling wine,Roserock Rosé,Drouhin Oregon,USA,null,null,2,null,28.05,null,2026-05-17 11:45:09.844922,2026-05-17 11:45:09.844922
+d3405d46-caab-43f9-8d47-65e9bb0f869b,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Arthur,Domaine Drouhin,USA,2024,null,1,chardonnay,39,null,2026-05-17 11:50:40.563856,2026-05-17 11:50:40.563856
+34c1f944-0fbd-4f70-bcdb-a17ebed88210,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,sparkling wine,Prosecco Rose,Ruffino,Italy,null,null,1,null,11,null,2026-05-09 16:54:00.561156,2026-05-09 16:54:00.561156
+c2a82377-dfa5-4472-864c-02d0a7ef8b32,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,J.LOHR,J.LOHR,USA,2023,null,1,pinot noir,20,null,2026-05-09 17:00:17.828404,2026-05-09 17:00:17.828404
+fe384b01-a7ed-481a-aa61-0e6f017b1120,fdb64d52-b496-4bfa-ab7c-c32dc1c7e345,wine,Josh,Josh,USA,2023,null,1,pinot noir,17,null,2026-05-09 16:59:27.015219,2026-05-09 16:59:27.015219
