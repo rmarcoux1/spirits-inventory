@@ -13,11 +13,11 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <Link to="/" className="brand">
-          <span className="brand-emoji">🥃</span> Spirits Inventory
+          <span className="brand-emoji">🏠</span> Household Spirits and Groceries Inventory
         </Link>
         <nav>
           <NavLink to="/" end>
-            Inventory
+            Spirits
           </NavLink>
           <NavLink to="/add">Add bottle</NavLink>
           <span className="nav-divider" aria-hidden="true" />
