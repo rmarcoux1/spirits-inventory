@@ -58,7 +58,7 @@ export function GroceryItemRow({ item, onAdjustQuantity, onToggleShoppingList, o
           <h4>{item.name}</h4>
           <p className="grocery-row-meta">
             {[item.brand, item.unit].filter(Boolean).join(" · ")}
-            {item.last_price != null && ` · $${item.last_price.toFixed(2)}`}
+            {item.last_price != null && ` · $${Number(item.last_price).toFixed(2)}`}
           </p>
         </div>
 
@@ -68,6 +68,7 @@ export function GroceryItemRow({ item, onAdjustQuantity, onToggleShoppingList, o
           </button>
           <span>
             {item.quantity}
+            {item.unit ? ` ${item.unit}` : ""}
           </span>
           <button aria-label="Increase quantity" onClick={() => onAdjustQuantity(item.id, 1)}>
             +

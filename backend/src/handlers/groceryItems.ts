@@ -13,6 +13,45 @@ async function list(): Promise<APIGatewayProxyResultV2> {
   return jsonResponse(200, result.Items ?? []);
 }
 
+// A plain-text-friendly export of just what's on the shopping list — built
+// for the Shortcuts app (see DEPLOY.md): "text" is ready to drop straight
+// into a Note with no formatting logic needed on the Shortcut side.
+async function shoppingList(): Promise<APIGatewayProxyResultV2> {
+  const result = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
+  const items = ((result.Items ?? []) as Array<Record<string, unknown>>)
+    .filter((i) => i.on_shopping_list)
+    .sort((a, b) => {
+      const catCompare = String(a.category).localeCompare(String(b.category));
+      return catCompare !== 0 ? catCompare : String(a.name).localeCompare(String(b.name));
+    });
+
+  const byCategory = new Map<string, Array<Record<string, unknown>>>();
+  for (const item of items) {
+    const cat = String(item.category);
+    if (!byCategory.has(cat)) byCategory.set(cat, []);
+    byCategory.get(cat)!.push(item);
+  }
+
+  const lines: string[] = ["🛒 Shopping List", ""];
+  for (const [category, catItems] of byCategory) {
+    lines.push(category.replace(/\b\w/g, (c) => c.toUpperCase()));
+    for (const item of catItems) {
+      const qtyPart = item.unit ? ` (${item.quantity} ${item.unit})` : item.quantity ? ` (${item.quantity})` : "";
+      const brandPart = item.brand ? ` — ${item.brand}` : "";
+      lines.push(`☐ ${item.name}${brandPart}${qtyPart}`);
+    }
+    lines.push("");
+  }
+  if (items.length === 0) lines.push("(nothing on the list right now)");
+
+  return jsonResponse(200, {
+    text: lines.join("\n").trim(),
+    items: items.map((i) => ({ name: i.name, category: i.category, brand: i.brand, unit: i.unit, quantity: i.quantity })),
+    count: items.length,
+    generated_at: new Date().toISOString(),
+  });
+}
+
 async function create(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
   const body = JSON.parse(event.body ?? "{}") as NewGroceryItem;
   if (!body.name || !body.category) {
@@ -69,6 +108,8 @@ export async function handler(event: APIGatewayProxyEventV2): Promise<APIGateway
 
   const method = event.requestContext.http.method;
   const id = event.pathParameters?.id;
+
+  if (event.rawPath === "/shopping-list" && method === "GET") return shoppingList();
 
   if (method === "GET" && !id) return list();
   if (method === "POST" && !id) return create(event);

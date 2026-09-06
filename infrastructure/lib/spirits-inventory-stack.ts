@@ -166,6 +166,11 @@ export class SpiritsInventoryStack extends Stack {
       integration: groceryItemsIntegration,
     });
     httpApi.addRoutes({
+      path: "/shopping-list",
+      methods: [apigwv2.HttpMethod.GET],
+      integration: groceryItemsIntegration,
+    });
+    httpApi.addRoutes({
       path: "/grocery-items/{id}",
       methods: [apigwv2.HttpMethod.PUT, apigwv2.HttpMethod.DELETE],
       integration: groceryItemsIntegration,
