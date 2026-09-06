@@ -68,7 +68,6 @@ export function GroceryItemRow({ item, onAdjustQuantity, onToggleShoppingList, o
           </button>
           <span>
             {item.quantity}
-            {item.unit ? ` ${item.unit}` : ""}
           </span>
           <button aria-label="Increase quantity" onClick={() => onAdjustQuantity(item.id, 1)}>
             +
