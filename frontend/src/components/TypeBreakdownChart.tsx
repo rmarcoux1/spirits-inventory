@@ -2,17 +2,17 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { type Bottle, typeLabel } from "../api";
 
 const COLORS: Record<string, string> = {
-  wine: "#9c3142",
-  champagne: "#d9b466",
-  "sparkling wine": "#7ca089",
-  whiskey: "#cf9138",
-  vodka: "#b87f30",
-  gin: "#c4954a",
-  rum: "#a86b26",
-  tequila: "#d4a44f",
-  brandy: "#9c6b28",
-  mezcal: "#bf8c3e",
-  liqueur: "#ce9a4a",
+  wine: "#e8491d",
+  champagne: "#ff4f81",
+  "sparkling wine": "#0ea394",
+  whiskey: "#f2a93b",
+  vodka: "#eb9d2e",
+  gin: "#e4a856",
+  rum: "#d68a1f",
+  tequila: "#f5b94a",
+  brandy: "#c77e14",
+  mezcal: "#e0993a",
+  liqueur: "#f2b45e",
 };
 
 export function TypeBreakdownChart({ bottles }: { bottles: Bottle[] }) {
@@ -38,13 +38,13 @@ export function TypeBreakdownChart({ bottles }: { bottles: Bottle[] }) {
         </Pie>
         <Tooltip
           contentStyle={{
-            background: "#17301f",
-            border: "1px solid #2c4a34",
+            background: "#ffffff",
+            border: "1px solid #e8d2a0",
             borderRadius: 8,
-            color: "#f3ead2",
+            color: "#2a1b10",
             fontSize: 13,
           }}
-          itemStyle={{ color: "#f3ead2" }}
+          itemStyle={{ color: "#2a1b10" }}
         />
       </PieChart>
     </ResponsiveContainer>

@@ -13,20 +13,19 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <Link to="/" className="brand">
-          <span className="brand-emoji">🏠</span> Household Spirits and Groceries Inventory
+          <span className="brand-emoji">🥃</span> Spirits Inventory
         </Link>
         <nav>
           <NavLink to="/" end>
-            Spirits
+            Inventory
           </NavLink>
           <NavLink to="/add">Add bottle</NavLink>
           <span className="nav-divider" aria-hidden="true" />
           <NavLink to="/groceries" end>
             Groceries
           </NavLink>
-          <NavLink to="/groceries/add">Add item</NavLink>
           <NavLink to="/groceries/list">Shopping list</NavLink>
-
+          <NavLink to="/groceries/add">Add item</NavLink>
         </nav>
       </header>
 
