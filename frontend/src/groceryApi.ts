@@ -48,7 +48,8 @@ export function categoryIcon(category: GroceryCategory): string {
   return CATEGORY_ICONS[category] ?? "🛒";
 }
 
-export function categoryLabel(category: GroceryCategory): string {
+export function categoryLabel(category: GroceryCategory | null | undefined): string {
+  if (!category) return "Uncategorized";
   return category.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
