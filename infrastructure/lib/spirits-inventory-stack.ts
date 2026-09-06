@@ -125,6 +125,7 @@ export class SpiritsInventoryStack extends Stack {
       corsPreflight: {
         allowOrigins: [
           "http://localhost:5173", // local `npm run dev`
+          "https://main.d1ifwkv7hj8q8u.amplifyapp.com", // Amplify Hosting
         ],
         allowMethods: [
           apigwv2.CorsHttpMethod.GET,
