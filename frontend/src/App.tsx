@@ -13,7 +13,7 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <Link to="/" className="brand">
-          <span className="brand-emoji">🥃</span> Spirits Inventory
+          <span className="brand-emoji">🏠</span> Household Spirits and Groceries Inventory
         </Link>
         <nav>
           <NavLink to="/" end>
@@ -24,8 +24,8 @@ export default function App() {
           <NavLink to="/groceries" end>
             Groceries
           </NavLink>
-          <NavLink to="/groceries/list">Shopping list</NavLink>
           <NavLink to="/groceries/add">Add item</NavLink>
+          <NavLink to="/groceries/list">Shopping list</NavLink>
         </nav>
       </header>
 
