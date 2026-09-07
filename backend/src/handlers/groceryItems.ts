@@ -32,13 +32,13 @@ async function shoppingList(): Promise<APIGatewayProxyResultV2> {
     byCategory.get(cat)!.push(item);
   }
 
-  const lines: string[] = ["🛒 Shopping List", ""];
+  const lines: string[] = ["Shopping List", ""];
   for (const [category, catItems] of byCategory) {
     lines.push(category.replace(/\b\w/g, (c) => c.toUpperCase()));
     for (const item of catItems) {
       const qtyPart = item.unit ? ` (${item.quantity} ${item.unit})` : item.quantity ? ` (${item.quantity})` : "";
       const brandPart = item.brand ? ` — ${item.brand}` : "";
-      lines.push(`☐ ${item.name}${brandPart}${qtyPart}`);
+      lines.push(`${item.name}${brandPart}${qtyPart}`);
     }
     lines.push("");
   }
