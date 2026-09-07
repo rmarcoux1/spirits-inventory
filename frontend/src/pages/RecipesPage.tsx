@@ -3,16 +3,34 @@ import { useRecipes } from "../hooks/useRecipes";
 import { useGroceryItems } from "../hooks/useGroceryItems";
 import { useShoppingList } from "../hooks/useShoppingList";
 import { RecipeRow } from "../components/RecipeRow";
+import { cleanIngredientName } from "../services/fuzzyMatch";
 
 export default function RecipesPage() {
   const { recipes, loading, error, removeRecipe } = useRecipes();
-  const { items: groceryItems } = useGroceryItems();
-  const { addItem, findByName } = useShoppingList();
+  const { items: groceryItems, addItem: addGroceryItem } = useGroceryItems();
+  const { addItem: addToShoppingList, findByName } = useShoppingList();
 
   async function handleAddMissingToList(names: string[]) {
     for (const name of names) {
-      await addItem({ name, quantity: 1, note: null });
+      await addToShoppingList({ name, quantity: 1, note: null });
     }
+  }
+
+  // "Turns out I already have this" — creates it as a real inventory item
+  // (category defaults to "pantry" since we can't reliably guess one from
+  // just an ingredient name; easy to correct via Edit afterward).
+  async function handleAddToInventory(ingredient: string) {
+    await addGroceryItem({
+      name: cleanIngredientName(ingredient),
+      brand: null,
+      category: "pantry",
+      unit: null,
+      quantity: 1,
+      is_staple: false,
+      barcode: null,
+      image_url: null,
+      notes: null,
+    });
   }
 
   return (
@@ -46,6 +64,7 @@ export default function RecipesPage() {
             groceryItems={groceryItems}
             findOnShoppingList={(name) => !!findByName(name)}
             onAddMissingToList={handleAddMissingToList}
+            onAddToInventory={handleAddToInventory}
             onRemove={removeRecipe}
           />
         ))}

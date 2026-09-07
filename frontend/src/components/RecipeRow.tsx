@@ -2,27 +2,36 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { Recipe } from "../recipeApi";
 import type { GroceryItem } from "../groceryApi";
+import { fuzzyMatch } from "../services/fuzzyMatch";
 
 interface Props {
   recipe: Recipe;
   groceryItems: GroceryItem[];
   findOnShoppingList: (name: string) => boolean;
   onAddMissingToList: (names: string[]) => Promise<unknown>;
+  onAddToInventory: (name: string) => Promise<unknown>;
   onRemove: (id: string) => void;
 }
 
-// "Have it" just means a matching-name inventory item exists with
-// quantity > 0 — no unit-aware "do I have enough for this recipe"
-// comparison. See the comment on the Recipe type for why.
+// "Have it" means a fuzzy-matching inventory item exists with quantity > 0
+// — see services/fuzzyMatch.ts. Still not unit-aware: it only knows
+// whether you have *any* of an ingredient, not whether you have *enough*.
 function haveIngredient(name: string, groceryItems: GroceryItem[]): boolean {
-  const target = name.trim().toLowerCase();
-  return groceryItems.some((i) => i.name.trim().toLowerCase() === target && i.quantity > 0);
+  return groceryItems.some((i) => i.quantity > 0 && fuzzyMatch(name, i.name));
 }
 
-export function RecipeRow({ recipe, groceryItems, findOnShoppingList, onAddMissingToList, onRemove }: Props) {
+export function RecipeRow({
+  recipe,
+  groceryItems,
+  findOnShoppingList,
+  onAddMissingToList,
+  onAddToInventory,
+  onRemove,
+}: Props) {
   const [expanded, setExpanded] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  const [addingIngredient, setAddingIngredient] = useState<string | null>(null);
 
   const missing = recipe.ingredients.filter((ing) => !haveIngredient(ing, groceryItems));
   const haveCount = recipe.ingredients.length - missing.length;
@@ -41,6 +50,19 @@ export function RecipeRow({ recipe, groceryItems, findOnShoppingList, onAddMissi
       );
     } finally {
       setAdding(false);
+    }
+  }
+
+  // "Turns out I already have this" — adds it straight to Groceries
+  // inventory instead of the shopping list, for when "missing" was wrong
+  // because it just wasn't tracked yet.
+  async function handleAddToInventory(ingredient: string) {
+    setAddingIngredient(ingredient);
+    try {
+      await onAddToInventory(ingredient);
+      setStatus(`Added "${ingredient}" to your inventory.`);
+    } finally {
+      setAddingIngredient(null);
     }
   }
 
@@ -73,11 +95,25 @@ export function RecipeRow({ recipe, groceryItems, findOnShoppingList, onAddMissi
 
       {expanded && (
         <ul className="recipe-ingredient-list">
-          {recipe.ingredients.map((ing) => (
-            <li key={ing} className={haveIngredient(ing, groceryItems) ? "have" : "missing"}>
-              {haveIngredient(ing, groceryItems) ? "✓" : "✗"} {ing}
-            </li>
-          ))}
+          {recipe.ingredients.map((ing) => {
+            const have = haveIngredient(ing, groceryItems);
+            return (
+              <li key={ing} className={have ? "have" : "missing"}>
+                <span>
+                  {have ? "✓" : "✗"} {ing}
+                </span>
+                {!have && (
+                  <button
+                    className="btn-ghost recipe-ingredient-add"
+                    onClick={() => handleAddToInventory(ing)}
+                    disabled={addingIngredient === ing}
+                  >
+                    {addingIngredient === ing ? "Adding…" : "+ I have this"}
+                  </button>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
       {expanded && recipe.instructions && <p className="recipe-instructions">{recipe.instructions}</p>}

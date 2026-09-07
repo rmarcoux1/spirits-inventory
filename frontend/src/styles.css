@@ -1041,8 +1041,15 @@ body {
   border-top: 1px dashed var(--panel-line);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   font-size: 13px;
+}
+
+.recipe-ingredient-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .recipe-ingredient-list li.have {
@@ -1051,6 +1058,20 @@ body {
 
 .recipe-ingredient-list li.missing {
   color: var(--danger);
+}
+
+.recipe-ingredient-add {
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+  border: 1px solid var(--panel-line);
+  border-radius: 999px;
+  color: var(--muted) !important;
+  flex-shrink: 0;
+}
+
+.recipe-ingredient-add:hover {
+  border-color: var(--coral);
+  color: var(--coral-deep) !important;
 }
 
 .recipe-instructions {
