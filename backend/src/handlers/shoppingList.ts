@@ -4,27 +4,26 @@ import { DeleteCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/
 import { ddb } from "../lib/dynamo.js";
 import { jsonResponse } from "../lib/http.js";
 import { isAuthorized } from "../lib/auth.js";
-import type { NewGroceryItem } from "../lib/groceryTypes.js";
+import type { NewShoppingListItem } from "../lib/groceryTypes.js";
 
-const TABLE_NAME = process.env.GROCERY_ITEMS_TABLE_NAME ?? "";
+const TABLE_NAME = process.env.SHOPPING_LIST_TABLE_NAME ?? "";
 
 async function list(): Promise<APIGatewayProxyResultV2> {
   const result = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
-  return jsonResponse(200, result.Items ?? []);
+  const items = (result.Items ?? []).sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
+  return jsonResponse(200, items);
 }
 
 async function create(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
-  const body = JSON.parse(event.body ?? "{}") as NewGroceryItem;
-  if (!body.name || !body.category) {
-    return jsonResponse(400, { message: "name and category are required" });
-  }
+  const body = JSON.parse(event.body ?? "{}") as NewShoppingListItem;
+  if (!body.name) return jsonResponse(400, { message: "name is required" });
 
   const now = new Date().toISOString();
   const item = {
-    ...body,
-    quantity: body.quantity ?? 0,
-    is_staple: body.is_staple ?? false,
     id: randomUUID(),
+    name: body.name,
+    quantity: body.quantity ?? 1,
+    note: body.note ?? null,
     created_at: now,
     updated_at: now,
   };
@@ -59,6 +58,34 @@ async function remove(id: string): Promise<APIGatewayProxyResultV2> {
   return jsonResponse(204, null);
 }
 
+// The Shortcuts-friendly export (see DEPLOY.md) — now reads straight from
+// this standalone list instead of filtering inventory items, so it always
+// reflects exactly what's here, nothing more.
+async function textExport(): Promise<APIGatewayProxyResultV2> {
+  const result = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
+  const items = ((result.Items ?? []) as Array<Record<string, unknown>>).sort((a, b) =>
+    String(a.name).localeCompare(String(b.name))
+  );
+
+  const lines: string[] = ["🛒 Shopping List", ""];
+  if (items.length === 0) {
+    lines.push("(nothing on the list right now)");
+  } else {
+    for (const item of items) {
+      const qtyPart = typeof item.quantity === "number" && item.quantity > 1 ? ` (${item.quantity})` : "";
+      const notePart = item.note ? ` — ${item.note}` : "";
+      lines.push(`☐ ${item.name}${qtyPart}${notePart}`);
+    }
+  }
+
+  return jsonResponse(200, {
+    text: lines.join("\n").trim(),
+    items: items.map((i) => ({ name: i.name, quantity: i.quantity, note: i.note })),
+    count: items.length,
+    generated_at: new Date().toISOString(),
+  });
+}
+
 export async function handler(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
   if (event.requestContext.http.method === "OPTIONS") return jsonResponse(200, {});
 
@@ -68,6 +95,8 @@ export async function handler(event: APIGatewayProxyEventV2): Promise<APIGateway
 
   const method = event.requestContext.http.method;
   const id = event.pathParameters?.id;
+
+  if (event.rawPath === "/shopping-list" && method === "GET") return textExport();
 
   if (method === "GET" && !id) return list();
   if (method === "POST" && !id) return create(event);

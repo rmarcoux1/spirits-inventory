@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { groceryApi, type GroceryItem, type NewGroceryItem, type NewGroceryPurchase } from "../groceryApi";
+import { groceryApi, type GroceryItem, type NewGroceryItem } from "../groceryApi";
 
+// The on-hand pantry — quantity you manually manage. No purchase history,
+// no shopping-list linkage; see useShoppingList for that separate list.
 export function useGroceryItems() {
   const [items, setItems] = useState<GroceryItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,8 +36,6 @@ export function useGroceryItems() {
     return updated;
   }
 
-  // Consumption — "I used one of these," not a purchase. Doesn't touch
-  // price history.
   async function adjustQuantity(id: string, delta: number) {
     const item = items.find((i) => i.id === id);
     if (!item) return;
@@ -43,25 +43,6 @@ export function useGroceryItems() {
     setItems((prev) => prev.map((i) => (i.id === id ? { ...i, quantity } : i)));
     try {
       await groceryApi.updateItem(id, { quantity });
-    } catch (err) {
-      setItems((prev) => prev.map((i) => (i.id === id ? item : i)));
-      console.error(err);
-    }
-  }
-
-  // A purchase — restocks quantity AND logs a price-history entry.
-  async function logPurchase(id: string, purchase: NewGroceryPurchase) {
-    const { item } = await groceryApi.logPurchase(id, purchase);
-    setItems((prev) => prev.map((i) => (i.id === id ? item : i)));
-    return item;
-  }
-
-  async function toggleShoppingList(id: string, on: boolean) {
-    const item = items.find((i) => i.id === id);
-    if (!item) return;
-    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, on_shopping_list: on } : i)));
-    try {
-      await groceryApi.updateItem(id, { on_shopping_list: on });
     } catch (err) {
       setItems((prev) => prev.map((i) => (i.id === id ? item : i)));
       console.error(err);
@@ -79,5 +60,5 @@ export function useGroceryItems() {
     }
   }
 
-  return { items, loading, error, reload, addItem, editItem, adjustQuantity, logPurchase, toggleShoppingList, removeItem };
+  return { items, loading, error, reload, addItem, editItem, adjustQuantity, removeItem };
 }

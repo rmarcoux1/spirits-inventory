@@ -1,32 +1,24 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGroceryItems } from "../hooks/useGroceryItems";
-import { groceryApi, type GroceryCategory, type GroceryPurchase, GROCERY_CATEGORIES, categoryIcon, categoryLabel } from "../groceryApi";
+import { useShoppingList } from "../hooks/useShoppingList";
+import { GROCERY_CATEGORIES, categoryIcon, categoryLabel, type GroceryCategory } from "../groceryApi";
 import { StatCard } from "../components/StatCard";
 import { GroceryItemRow } from "../components/GroceryItemRow";
 import { QuickScanDecrement } from "../components/QuickScanDecrement";
 import { CategoryBreakdownChart } from "../components/CategoryBreakdownChart";
 
 export default function GroceryDashboard() {
-  const { items, loading, error, adjustQuantity, logPurchase, toggleShoppingList, removeItem } = useGroceryItems();
+  const { items, loading, error, adjustQuantity, removeItem } = useGroceryItems();
+  const { items: shoppingItems, toggleByName } = useShoppingList();
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<GroceryCategory | "all">("all");
   const [showScan, setShowScan] = useState(false);
-  const [purchases, setPurchases] = useState<GroceryPurchase[]>([]);
 
-  useEffect(() => {
-    groceryApi.listAllPurchases().then(setPurchases).catch(() => setPurchases([]));
-  }, []);
-
-  const spentThisMonth = useMemo(() => {
-    const now = new Date();
-    return purchases
-      .filter((p) => {
-        const d = new Date(p.purchased_at);
-        return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-      })
-      .reduce((sum, p) => sum + p.price, 0);
-  }, [purchases]);
+  const shoppingListNames = useMemo(
+    () => new Set(shoppingItems.map((i) => i.name.trim().toLowerCase())),
+    [shoppingItems]
+  );
 
   const lowStockCount = items.filter((i) => i.quantity === 0).length;
 
@@ -53,7 +45,6 @@ export default function GroceryDashboard() {
       <div className="stat-grid">
         <StatCard label="Items tracked" value={items.length.toString()} />
         <StatCard label="Out of stock" value={lowStockCount.toString()} />
-        <StatCard label="Spent this month" value={`$${spentThisMonth.toFixed(2)}`} />
       </div>
 
       <div className="chart-card">
@@ -114,8 +105,8 @@ export default function GroceryDashboard() {
             key={item.id}
             item={item}
             onAdjustQuantity={adjustQuantity}
-            onToggleShoppingList={toggleShoppingList}
-            onLogPurchase={logPurchase}
+            onToggleShoppingList={() => toggleByName(item.name)}
+            isOnShoppingList={shoppingListNames.has(item.name.trim().toLowerCase())}
             onRemove={removeItem}
           />
         ))}

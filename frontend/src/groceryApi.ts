@@ -53,6 +53,8 @@ export function categoryLabel(category: GroceryCategory | null | undefined): str
   return category.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+// --- On-hand inventory (the pantry) ------------------------------------
+
 export interface GroceryItem {
   id: string;
   name: string;
@@ -60,28 +62,28 @@ export interface GroceryItem {
   category: GroceryCategory;
   unit: string | null;
   quantity: number;
+  is_staple: boolean;
   barcode: string | null;
   image_url: string | null;
   notes: string | null;
-  on_shopping_list: boolean;
-  last_price: number | null;
   created_at: string;
   updated_at: string;
 }
 
-export type NewGroceryItem = Omit<GroceryItem, "id" | "created_at" | "updated_at" | "last_price">;
+export type NewGroceryItem = Omit<GroceryItem, "id" | "created_at" | "updated_at">;
 
-export interface GroceryPurchase {
+// --- Shopping list (standalone, not linked to inventory) ---------------
+
+export interface ShoppingListItem {
   id: string;
-  item_id: string;
-  price: number;
+  name: string;
   quantity: number;
-  store: string | null;
-  purchased_at: string;
+  note: string | null;
   created_at: string;
+  updated_at: string;
 }
 
-export type NewGroceryPurchase = Omit<GroceryPurchase, "id" | "item_id" | "created_at">;
+export type NewShoppingListItem = Omit<ShoppingListItem, "id" | "created_at" | "updated_at">;
 
 export const groceryApi = {
   listItems: () => apiRequest<GroceryItem[]>("/grocery-items"),
@@ -90,12 +92,13 @@ export const groceryApi = {
   updateItem: (id: string, patch: Partial<NewGroceryItem>) =>
     apiRequest<GroceryItem>(`/grocery-items/${id}`, { method: "PUT", body: JSON.stringify(patch) }),
   deleteItem: (id: string) => apiRequest<void>(`/grocery-items/${id}`, { method: "DELETE" }),
+};
 
-  logPurchase: (itemId: string, purchase: NewGroceryPurchase) =>
-    apiRequest<{ purchase: GroceryPurchase; item: GroceryItem }>(`/grocery-items/${itemId}/purchases`, {
-      method: "POST",
-      body: JSON.stringify(purchase),
-    }),
-  listPurchasesForItem: (itemId: string) => apiRequest<GroceryPurchase[]>(`/grocery-items/${itemId}/purchases`),
-  listAllPurchases: () => apiRequest<GroceryPurchase[]>("/grocery-purchases"),
+export const shoppingListApi = {
+  listItems: () => apiRequest<ShoppingListItem[]>("/shopping-list-items"),
+  createItem: (item: NewShoppingListItem) =>
+    apiRequest<ShoppingListItem>("/shopping-list-items", { method: "POST", body: JSON.stringify(item) }),
+  updateItem: (id: string, patch: Partial<NewShoppingListItem>) =>
+    apiRequest<ShoppingListItem>(`/shopping-list-items/${id}`, { method: "PUT", body: JSON.stringify(patch) }),
+  deleteItem: (id: string) => apiRequest<void>(`/shopping-list-items/${id}`, { method: "DELETE" }),
 };

@@ -6,6 +6,9 @@ import GroceryDashboard from "./pages/GroceryDashboard";
 import AddGroceryItemPage from "./pages/AddGroceryItemPage";
 import EditGroceryItemPage from "./pages/EditGroceryItemPage";
 import ShoppingListPage from "./pages/ShoppingListPage";
+import RecipesPage from "./pages/RecipesPage";
+import AddRecipePage from "./pages/AddRecipePage";
+import EditRecipePage from "./pages/EditRecipePage";
 import "./styles.css";
 
 export default function App() {
@@ -13,7 +16,7 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <Link to="/" className="brand">
-          <span className="brand-emoji">🏠</span> Household Spirits and Groceries Inventory
+          <span className="brand-emoji">🥃</span> Spirits Inventory
         </Link>
         <nav>
           <NavLink to="/" end>
@@ -24,8 +27,9 @@ export default function App() {
           <NavLink to="/groceries" end>
             Groceries
           </NavLink>
-          <NavLink to="/groceries/add">Add item</NavLink>
           <NavLink to="/groceries/list">Shopping list</NavLink>
+          <NavLink to="/groceries/add">Add item</NavLink>
+          <NavLink to="/recipes">Recipes</NavLink>
         </nav>
       </header>
 
@@ -39,6 +43,10 @@ export default function App() {
           <Route path="/groceries/add" element={<AddGroceryItemPage />} />
           <Route path="/groceries/edit/:id" element={<EditGroceryItemPage />} />
           <Route path="/groceries/list" element={<ShoppingListPage />} />
+
+          <Route path="/recipes" element={<RecipesPage />} />
+          <Route path="/recipes/add" element={<AddRecipePage />} />
+          <Route path="/recipes/edit/:id" element={<EditRecipePage />} />
         </Routes>
       </main>
     </div>

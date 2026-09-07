@@ -23,10 +23,10 @@ function formFromItem(i?: GroceryItem) {
     category: (i?.category ?? "pantry") as GroceryCategory,
     unit: i?.unit ?? "",
     quantity: i?.quantity ?? 1,
+    is_staple: i?.is_staple ?? false,
     barcode: i?.barcode ?? "",
     image_url: i?.image_url ?? "",
     notes: i?.notes ?? "",
-    on_shopping_list: i?.on_shopping_list ?? false,
   };
 }
 
@@ -85,10 +85,10 @@ export function GroceryItemForm({ mode, initial, onSubmit }: Props) {
       category: form.category,
       unit: form.unit.trim() || null,
       quantity: form.quantity,
+      is_staple: form.is_staple,
       barcode: form.barcode || null,
       image_url: form.image_url || null,
       notes: form.notes.trim() || null,
-      on_shopping_list: form.on_shopping_list,
     };
 
     try {
@@ -166,12 +166,8 @@ export function GroceryItemForm({ mode, initial, onSubmit }: Props) {
         </div>
 
         <label className="field full checkbox-field">
-          <input
-            type="checkbox"
-            checked={form.on_shopping_list}
-            onChange={(e) => update("on_shopping_list", e.target.checked)}
-          />
-          <span>Add to shopping list</span>
+          <input type="checkbox" checked={form.is_staple} onChange={(e) => update("is_staple", e.target.checked)} />
+          <span>Staple — buy every week</span>
         </label>
 
         <label className="field full">

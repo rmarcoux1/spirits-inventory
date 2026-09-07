@@ -20,6 +20,7 @@ export class SpiritsInventoryStack extends Stack {
       removalPolicy: RemovalPolicy.RETAIN, // don't lose the collection if the stack is torn down
     });
 
+    // The on-hand pantry — separate from the shopping list below.
     const groceryItemsTable = new dynamodb.Table(this, "GroceryItemsTable", {
       tableName: "SpiritsInventoryGroceryItems",
       partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
@@ -27,11 +28,21 @@ export class SpiritsInventoryStack extends Stack {
       removalPolicy: RemovalPolicy.RETAIN,
     });
 
-    const groceryPurchasesTable = new dynamodb.Table(this, "GroceryPurchasesTable", {
-      tableName: "SpiritsInventoryGroceryPurchases",
+    // The shopping list — standalone, not linked to GroceryItems.
+    const shoppingListTable = new dynamodb.Table(this, "ShoppingListTable", {
+      tableName: "SpiritsInventoryShoppingList",
       partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.RETAIN, // this is the price-history log — don't lose it
+      removalPolicy: RemovalPolicy.RETAIN,
+    });
+
+    // Recipes — ingredient lists are just names, matched against
+    // GroceryItems by name (same pattern as staples/the star toggle).
+    const recipesTable = new dynamodb.Table(this, "RecipesTable", {
+      tableName: "SpiritsInventoryRecipes",
+      partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.RETAIN,
     });
 
     // --- Shared API secret (v1 access control, see backend/src/lib/auth.ts) ---
@@ -90,7 +101,7 @@ export class SpiritsInventoryStack extends Stack {
     apiSecret.grantRead(bottlesFn);
     apiSecret.grantRead(barcodeFn);
 
-    // --- Grocery Lambdas ---------------------------------------------
+    // --- Grocery inventory Lambda --------------------------------------
     const groceryItemsFn = new nodejs.NodejsFunction(this, "GroceryItemsFunction", {
       entry: path.join(backendRoot, "src", "handlers", "groceryItems.ts"),
       environment: {
@@ -100,24 +111,44 @@ export class SpiritsInventoryStack extends Stack {
       ...commonProps,
     });
 
-    // Logging a purchase writes to GroceryPurchases (the price-history log)
-    // and also updates the matching row in GroceryItems (quantity + last
-    // price) — needs write access to both tables.
-    const groceryPurchasesFn = new nodejs.NodejsFunction(this, "GroceryPurchasesFunction", {
-      entry: path.join(backendRoot, "src", "handlers", "groceryPurchases.ts"),
+    // --- Shopping list Lambda (standalone, also serves the Shortcuts export) ---
+    const shoppingListFn = new nodejs.NodejsFunction(this, "ShoppingListFunction", {
+      entry: path.join(backendRoot, "src", "handlers", "shoppingList.ts"),
       environment: {
-        GROCERY_PURCHASES_TABLE_NAME: groceryPurchasesTable.tableName,
-        GROCERY_ITEMS_TABLE_NAME: groceryItemsTable.tableName,
+        SHOPPING_LIST_TABLE_NAME: shoppingListTable.tableName,
         API_KEY_SECRET_ARN: apiSecret.secretArn,
       },
       ...commonProps,
     });
 
     groceryItemsTable.grantReadWriteData(groceryItemsFn);
-    groceryItemsTable.grantReadWriteData(groceryPurchasesFn);
-    groceryPurchasesTable.grantReadWriteData(groceryPurchasesFn);
+    shoppingListTable.grantReadWriteData(shoppingListFn);
     apiSecret.grantRead(groceryItemsFn);
-    apiSecret.grantRead(groceryPurchasesFn);
+    apiSecret.grantRead(shoppingListFn);
+
+    // --- Recipes Lambda --------------------------------------------------
+    const recipesFn = new nodejs.NodejsFunction(this, "RecipesFunction", {
+      entry: path.join(backendRoot, "src", "handlers", "recipes.ts"),
+      environment: {
+        RECIPES_TABLE_NAME: recipesTable.tableName,
+        API_KEY_SECRET_ARN: apiSecret.secretArn,
+      },
+      ...commonProps,
+    });
+
+    recipesTable.grantReadWriteData(recipesFn);
+    apiSecret.grantRead(recipesFn);
+
+    // --- Recipe search Lambda (proxies TheMealDB server-side) -----------
+    const recipeSearchFn = new nodejs.NodejsFunction(this, "RecipeSearchFunction", {
+      entry: path.join(backendRoot, "src", "handlers", "recipeSearch.ts"),
+      environment: {
+        API_KEY_SECRET_ARN: apiSecret.secretArn,
+      },
+      ...commonProps,
+    });
+
+    apiSecret.grantRead(recipeSearchFn);
 
     // --- HTTP API --------------------------------------------------------
     const httpApi = new apigwv2.HttpApi(this, "SpiritsInventoryHttpApi", {
@@ -140,10 +171,9 @@ export class SpiritsInventoryStack extends Stack {
     const bottlesIntegration = new integrations.HttpLambdaIntegration("BottlesIntegration", bottlesFn);
     const barcodeIntegration = new integrations.HttpLambdaIntegration("BarcodeIntegration", barcodeFn);
     const groceryItemsIntegration = new integrations.HttpLambdaIntegration("GroceryItemsIntegration", groceryItemsFn);
-    const groceryPurchasesIntegration = new integrations.HttpLambdaIntegration(
-      "GroceryPurchasesIntegration",
-      groceryPurchasesFn
-    );
+    const shoppingListIntegration = new integrations.HttpLambdaIntegration("ShoppingListIntegration", shoppingListFn);
+    const recipesIntegration = new integrations.HttpLambdaIntegration("RecipesIntegration", recipesFn);
+    const recipeSearchIntegration = new integrations.HttpLambdaIntegration("RecipeSearchIntegration", recipeSearchFn);
 
     httpApi.addRoutes({
       path: "/items",
@@ -166,30 +196,46 @@ export class SpiritsInventoryStack extends Stack {
       integration: groceryItemsIntegration,
     });
     httpApi.addRoutes({
-      path: "/shopping-list",
-      methods: [apigwv2.HttpMethod.GET],
-      integration: groceryItemsIntegration,
-    });
-    httpApi.addRoutes({
       path: "/grocery-items/{id}",
       methods: [apigwv2.HttpMethod.PUT, apigwv2.HttpMethod.DELETE],
       integration: groceryItemsIntegration,
     });
     httpApi.addRoutes({
-      path: "/grocery-items/{id}/purchases",
+      path: "/shopping-list-items",
       methods: [apigwv2.HttpMethod.GET, apigwv2.HttpMethod.POST],
-      integration: groceryPurchasesIntegration,
+      integration: shoppingListIntegration,
     });
     httpApi.addRoutes({
-      path: "/grocery-purchases",
+      path: "/shopping-list-items/{id}",
+      methods: [apigwv2.HttpMethod.PUT, apigwv2.HttpMethod.DELETE],
+      integration: shoppingListIntegration,
+    });
+    httpApi.addRoutes({
+      path: "/shopping-list",
       methods: [apigwv2.HttpMethod.GET],
-      integration: groceryPurchasesIntegration,
+      integration: shoppingListIntegration,
+    });
+    httpApi.addRoutes({
+      path: "/recipes",
+      methods: [apigwv2.HttpMethod.GET, apigwv2.HttpMethod.POST],
+      integration: recipesIntegration,
+    });
+    httpApi.addRoutes({
+      path: "/recipes/{id}",
+      methods: [apigwv2.HttpMethod.PUT, apigwv2.HttpMethod.DELETE],
+      integration: recipesIntegration,
+    });
+    httpApi.addRoutes({
+      path: "/recipe-search",
+      methods: [apigwv2.HttpMethod.GET],
+      integration: recipeSearchIntegration,
     });
 
     new CfnOutput(this, "ApiUrl", { value: httpApi.apiEndpoint });
     new CfnOutput(this, "ApiSecretArn", { value: apiSecret.secretArn });
     new CfnOutput(this, "TableName", { value: table.tableName });
     new CfnOutput(this, "GroceryItemsTableName", { value: groceryItemsTable.tableName });
-    new CfnOutput(this, "GroceryPurchasesTableName", { value: groceryPurchasesTable.tableName });
+    new CfnOutput(this, "ShoppingListTableName", { value: shoppingListTable.tableName });
+    new CfnOutput(this, "RecipesTableName", { value: recipesTable.tableName });
   }
 }

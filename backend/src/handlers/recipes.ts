@@ -4,27 +4,28 @@ import { DeleteCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/
 import { ddb } from "../lib/dynamo.js";
 import { jsonResponse } from "../lib/http.js";
 import { isAuthorized } from "../lib/auth.js";
-import type { NewGroceryItem } from "../lib/groceryTypes.js";
+import type { NewRecipe } from "../lib/groceryTypes.js";
 
-const TABLE_NAME = process.env.GROCERY_ITEMS_TABLE_NAME ?? "";
+const TABLE_NAME = process.env.RECIPES_TABLE_NAME ?? "";
 
 async function list(): Promise<APIGatewayProxyResultV2> {
   const result = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
-  return jsonResponse(200, result.Items ?? []);
+  const items = (result.Items ?? []).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+  return jsonResponse(200, items);
 }
 
 async function create(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
-  const body = JSON.parse(event.body ?? "{}") as NewGroceryItem;
-  if (!body.name || !body.category) {
-    return jsonResponse(400, { message: "name and category are required" });
+  const body = JSON.parse(event.body ?? "{}") as NewRecipe;
+  if (!body.name || !Array.isArray(body.ingredients) || body.ingredients.length === 0) {
+    return jsonResponse(400, { message: "name and at least one ingredient are required" });
   }
 
   const now = new Date().toISOString();
   const item = {
-    ...body,
-    quantity: body.quantity ?? 0,
-    is_staple: body.is_staple ?? false,
     id: randomUUID(),
+    name: body.name,
+    ingredients: body.ingredients,
+    instructions: body.instructions ?? null,
     created_at: now,
     updated_at: now,
   };
