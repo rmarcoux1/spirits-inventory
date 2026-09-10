@@ -67,14 +67,14 @@ async function textExport(): Promise<APIGatewayProxyResultV2> {
     String(a.name).localeCompare(String(b.name))
   );
 
-  const lines: string[] = ["🛒 Shopping List", ""];
+  const lines: string[] = ["Shopping List", ""];
   if (items.length === 0) {
     lines.push("(nothing on the list right now)");
   } else {
     for (const item of items) {
       const qtyPart = typeof item.quantity === "number" && item.quantity > 1 ? ` (${item.quantity})` : "";
       const notePart = item.note ? ` — ${item.note}` : "";
-      lines.push(`☐ ${item.name}${qtyPart}${notePart}`);
+      lines.push(`${item.name}${qtyPart}${notePart}`);
     }
   }
 

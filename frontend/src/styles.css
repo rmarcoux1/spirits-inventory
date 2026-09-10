@@ -778,6 +778,111 @@ body {
   margin: 0 2px;
 }
 
+.nav-submenu {
+  position: relative;
+}
+
+.nav-submenu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.nav-submenu-caret {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.nav-submenu-caret--open {
+  transform: rotate(180deg);
+  color: var(--coral);
+}
+
+.nav-submenu-panel {
+  position: absolute;
+  top: 100%;
+  left: -10px;
+  margin-top: 14px;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  box-shadow: 0 12px 28px rgba(42, 27, 16, 0.16);
+  z-index: 10;
+
+  /* Closed by default: invisible, slightly raised, and non-interactive —
+     kept mounted (rather than conditionally rendered) so the open state
+     can transition in instead of just appearing. */
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.nav-submenu-panel--open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* A small pointer connecting the panel visually back to its trigger,
+   rather than it looking like it's floating unrelated to the nav item. */
+.nav-submenu-panel::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  width: 11px;
+  height: 11px;
+  background: var(--panel);
+  border-left: 1px solid var(--panel-line);
+  border-top: 1px solid var(--panel-line);
+  transform: rotate(45deg);
+  border-radius: 2px 0 0 0;
+}
+
+.nav-submenu-item {
+  position: relative;
+  padding: 8px 10px 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.1s ease;
+}
+
+.nav-submenu-item:hover {
+  background: var(--bg-deep);
+}
+
+.nav-submenu-item.active {
+  color: var(--coral-deep);
+  font-weight: 600;
+  background: rgba(232, 73, 29, 0.08);
+}
+
+.nav-submenu-item.active::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--coral);
+}
+
 .empty-state-hint {
   font-size: 12px;
   color: var(--muted);

@@ -9,46 +9,51 @@ import ShoppingListPage from "./pages/ShoppingListPage";
 import RecipesPage from "./pages/RecipesPage";
 import AddRecipePage from "./pages/AddRecipePage";
 import EditRecipePage from "./pages/EditRecipePage";
+import { NavWithSubmenu } from "./components/NavWithSubmenu";
 import "./styles.css";
 
 export default function App() {
   return (
-    <div className="app">
-      <header className="app-header">
-        <Link to="/" className="brand">
-          <span className="brand-emoji">🥃</span> Spirits Inventory
-        </Link>
-        <nav>
-          <NavLink to="/" end>
-            Inventory
-          </NavLink>
-          <NavLink to="/add">Add bottle</NavLink>
-          <span className="nav-divider" aria-hidden="true" />
-          <NavLink to="/groceries" end>
-            Groceries
-          </NavLink>
-          <NavLink to="/groceries/list">Shopping list</NavLink>
-          <NavLink to="/groceries/add">Add item</NavLink>
-          <NavLink to="/recipes">Recipes</NavLink>
-        </nav>
-      </header>
+      <div className="app">
+        <header className="app-header">
+          <Link to="/" className="brand">
+            <span className="brand-emoji">🏠</span> Household Groceries & Spirits Inventory
+          </Link>
+            <nav>
+                <NavWithSubmenu
+                    label="Groceries"
+                    to="/groceries"
+                    end
+                    children={[
+                        {label: "Shopping list", to: "/groceries/list"},
+                        {label: "Add item", to: "/groceries/add"},
+                    ]}
+                />
+                <span className="nav-divider" aria-hidden="true"/>
+                <NavWithSubmenu label="Spirits" to="/" end children={[{label: "Add bottle", to: "/add"}]}/>
+                <span className="nav-divider" aria-hidden="true"/>
+                <NavLink to="/recipes">Recipes</NavLink>
 
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/add" element={<AddBottlePage />} />
-          <Route path="/edit/:id" element={<EditBottlePage />} />
 
-          <Route path="/groceries" element={<GroceryDashboard />} />
-          <Route path="/groceries/add" element={<AddGroceryItemPage />} />
-          <Route path="/groceries/edit/:id" element={<EditGroceryItemPage />} />
-          <Route path="/groceries/list" element={<ShoppingListPage />} />
+            </nav>
+        </header>
 
-          <Route path="/recipes" element={<RecipesPage />} />
-          <Route path="/recipes/add" element={<AddRecipePage />} />
-          <Route path="/recipes/edit/:id" element={<EditRecipePage />} />
-        </Routes>
-      </main>
-    </div>
+          <main className="app-main">
+              <Routes>
+                  <Route path="/" element={<Dashboard/>}/>
+                  <Route path="/add" element={<AddBottlePage/>}/>
+            <Route path="/edit/:id" element={<EditBottlePage/>}/>
+
+            <Route path="/groceries" element={<GroceryDashboard/>}/>
+            <Route path="/groceries/add" element={<AddGroceryItemPage/>}/>
+            <Route path="/groceries/edit/:id" element={<EditGroceryItemPage/>}/>
+            <Route path="/groceries/list" element={<ShoppingListPage/>}/>
+
+            <Route path="/recipes" element={<RecipesPage/>}/>
+            <Route path="/recipes/add" element={<AddRecipePage/>}/>
+            <Route path="/recipes/edit/:id" element={<EditRecipePage/>}/>
+          </Routes>
+        </main>
+      </div>
   );
 }
